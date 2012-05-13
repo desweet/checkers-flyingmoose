@@ -50,6 +50,28 @@ public class Board {
 			}
 		}
 	}
+	public Board(String load)
+	{
+		board = new Piece[8][8];
+		int index = 0;
+		for(int i = 0; i < 8; i ++)
+		{
+			for (int j = 0; j < 8; j++)
+			{
+				if (index == load.length())
+					break;
+				else if (load.charAt(index) == 'b')
+					board[i][j] = new Piece(BLACK,false);
+				else if (load.charAt(index) == 'B')
+					board[i][j] = new Piece(BLACK,true);
+				else if (load.charAt(index) == 'r')
+					board[i][j] = new Piece(RED,false);
+				else if (load.charAt(index) == 'R')
+					board[i][j] = new Piece(RED,true);
+				index++;
+			}
+		}
+	}
 	/**
 	 * Upgrade a piece to a king
 	 * @param c the coordinate of which the piece is going to be upgraded
@@ -192,11 +214,11 @@ public class Board {
 	
 	public static void main(String[] args)
 	{
-		Board b = new Board();
+		Board b = new Board("-b-B-b-R");
 		b.toString();
-		System.out.println(b.move(new Move(new coordinate(2,0),new coordinate(3,1))));
-		System.out.println();
-		b.toString();
+	//	System.out.println(b.move(new Move(new coordinate(2,0),new coordinate(3,1))));
+	//	System.out.println();
+	//	b.toString();
 	}
 	
 }
