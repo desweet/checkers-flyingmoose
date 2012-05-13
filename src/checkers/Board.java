@@ -1,13 +1,15 @@
 package checkers;
-
+/**
+ * A basic board class that is a 2 dimensional array of pieces
+ */
 public class Board {
-//	private Piece[] red;
-//	private Piece[] black;
 	private Piece[][] board;
 	
 	final int BLACK = 1;
 	final int RED = -1;
-	
+	/**
+	 * Default constructor
+	 */
 	public Board()
 	{
 	//	int redCount=0;
@@ -20,24 +22,47 @@ public class Board {
 			if (i/4 != 1)
 			{
 			//	board[i / 4][(i*2)%8] = new Piece(BLACK, new coordinate(i / 4,(i*2)%8),false);
-				board[i / 4][(i*2+1)%8] = new Piece(BLACK, new coordinate(i / 4,(i*2+1)%8),false);
-				board[7 - i / 4][(i*2)%8] = new Piece(RED,new coordinate(7 - i / 4,(i*2)%8),false);
+				board[i / 4][(i*2+1)%8] = new Piece(BLACK,false);
+				board[7 - i / 4][(i*2)%8] = new Piece(RED,false);
 			}
 			else
 			{
-				board[i / 4][(i*2)%8] = new Piece(BLACK, new coordinate(i / 4,(i*2)%8),false);
+				board[i / 4][(i*2)%8] = new Piece(BLACK,false);
 			//	board[i / 4][(i*2+1)%8] = new Piece(BLACK, new coordinate(i / 4,(i*2+1)%8),false);
 			
-				board[7 - i / 4][(i*2+1)%8] = new Piece(RED,new coordinate(7 - i / 4,(i*2+1)%8),false);
+				board[7 - i / 4][(i*2+1)%8] = new Piece(RED,false);
 
 			}
 			
 		}
 	}
+	public Board(Board b)
+	{
+		board = new Piece[8][8];
+		for(int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 8; j++)
+			{
+				if (b.getPiece(new coordinate(i,j))!= null)
+					this.board[i][j] = new Piece(b.getPiece(new coordinate(i,j)));
+				else
+					this.board[i][j] = null;
+			}
+		}
+	}
+	/**
+	 * Upgrade a piece to a king
+	 * @param c the coordinate of which the piece is going to be upgraded
+	 */
 	public void kingPiece(coordinate c)
 	{
 		board[c.getX()][c.getY()].setKing(true);
 	}
+	/**
+	 * Gets the piece at a current coordinate and returns it
+	 * @param c the coordinate of the piece you want
+	 * @return the Piece object at the specified coordinate or null if no piece is there
+	 */
 	public Piece getPiece(coordinate c)
 	{
 		if (board[c.getX()][c.getY()] == null)
@@ -45,6 +70,12 @@ public class Board {
 		return new Piece(board[c.getX()][c.getY()]);
 		
 	}
+	/**
+	 * Removes a piece at a specified location
+	 * @param i  the number down
+	 * @param j  the numbe right
+	 * @return true if there was a piece there which is now removed or false if there was no piece there
+	 */
 	public boolean remove(int i, int j)
 	{
 		if (board[i][j] == null)
@@ -53,6 +84,11 @@ public class Board {
 			board[i][j] = null;
 		return true;
 	}
+	/**
+	 * Moves two pieces on the board
+	 * @param m the move attempting to execute
+	 * @return true if the move is possible, false if impossible
+	 */
 	public boolean move(Move m)
 	{
 		if (board[m.getSrc().getX()][m.getSrc().getY()] == null)
@@ -63,12 +99,23 @@ public class Board {
 		board[m.getSrc().getX()][m.getSrc().getY()] = null;
 		return true;	
 	}
-	public boolean redHere(coordinate loc)
+	/**
+	 * Re
+	 * @param loc
+	 * @return
+	 */
+/*	public boolean redHere(coordinate loc)
 	{
 		if (board[loc.getX()][loc.getY()].getColor() == RED)
 			return true;
 		return false;
-	}
+	}*/
+	/**
+	 * Determines if the piece is red at this location (i down, j right) 0 based
+	 * @param i 0 based coordinate down
+	 * @param j 0 based coordinate right
+	 * @return true if this piece is RED
+	 */
 	public boolean redHere(int i, int j)
 	{
 		if (board[i][j] == null)
@@ -84,6 +131,12 @@ public class Board {
 			return true;
 		return false;
 	}
+	/**
+	 * Determines if the piece is king at this location (i down, j right) 0 based
+	 * @param i 0 based coordinate down
+	 * @param j 0 based coordinate right
+	 * @return true if this piece is BLACK
+	 */
 	public boolean blackHere(int i, int j)
 	{
 		if (board[i][j] == null)
@@ -96,11 +149,19 @@ public class Board {
 	{
 		return board[loc.getX()][loc.getY()].isKing();
 	}
+	/**
+	 * Determines if the piece is king at this location (i down, j right) 0 based
+	 * @param i 0 based coordinate down
+	 * @param j 0 based coordinate right
+	 * @return true if this piece is a king
+	 */
 	public boolean kingHere(int i, int j)
 	{
 		return board[i][j].isKing();
 	}
-	
+	/**
+	 * Returns a string of the current board configuration
+	 */
 	public String toString()
 	{
 		for(int i = 0; i < 8; i++)
