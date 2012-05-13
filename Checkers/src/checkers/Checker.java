@@ -1,3 +1,14 @@
+/***********************************
+ * Checker.java
+ * Authors:   Corey Rausch
+ * Team:	  Treadstone
+ * Project:   Flying Moose
+ * 
+ * The Checker class is the object for each checkerpiece in
+ * the game. Each checker has a color, an x and y position on
+ * the checkerboard, and if it's a king or not. 
+ */
+
 package checkers;
 
 import java.awt.*;
@@ -8,16 +19,13 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Checker extends JPanel {
-	private int posX, posY, xSpot, ySpot;
+	private coordinate pos;
 	private Color color;
 	private boolean king;
 	ImageIcon checker;
 	
 	public Checker(int x, int y, Color c){
-		posX = x;
-		posY = y;
-		xSpot = (posX * 62)+4;
-		ySpot = (posY * 62)+1;
+		pos = new coordinate(x, y);
 		color = c;
 		kingMe();
 		setPreferredSize(new Dimension(62, 62));
@@ -37,35 +45,29 @@ public class Checker extends JPanel {
 	}
 	
 	public int getPosX(){
-		return posX;
+		return pos.getX();
 	}
 	
 	public int getPosY(){
-		return posY;
+		return pos.getY();
 	}
 	
-	public int getXSpot(){
-		return xSpot;
-	}
-	
-	public int getYSpot(){
-		return ySpot;
-	}
-	
+	//Sets the new coordinate and checks if it's a king now
 	public void setCoor(int x, int y){
-		posX = x;
-		posY = y;
+		pos.set(x, y);
 		kingMe();
 	}
 	
 	public void paintComponent(Graphics page) { 
-         //creates the string that will be drawn on the screen 
-         checker.paintIcon(this, page, 6, 6); 
+        //creates the string that will be drawn on the screen 
+		//Positions the checker in the center of a 62x62 pix square
+        checker.paintIcon(this, page, 6, 6); 
     }
 	
+	//Kings the checker piece when it reaches the other end of the board
 	public void kingMe(){
 		if(color.equals(Color.RED)){
-			if(posY == 7)
+			if(pos.getY() == 0)
 			{
 				king = true;
 				checker = new ImageIcon("crownred.gif", "a red king");
@@ -74,7 +76,7 @@ public class Checker extends JPanel {
 			else
 				king = false;
 		}else{
-			if(posY == 0)
+			if(pos.getY() == 7)
 			{
 				king = true;				
 				checker = new ImageIcon("crownblack.gif", "a black king");
@@ -86,31 +88,21 @@ public class Checker extends JPanel {
 		repaint();
 	}
 	
-	public String toString(){
-		return posX + " " + posY + " " + color.toString();
+	public void select(){
+		if(king){
+			if(color.equals(Color.RED))
+				checker = new ImageIcon("crownred_select.gif", "a red selected king");
+			else
+				checker = new ImageIcon("crownblack_select.gif", "a black selected king");
+		}else{
+			if(color.equals(Color.RED))
+				checker = new ImageIcon("checkred_select.gif", "a red selected");
+			else
+				checker = new ImageIcon("checkblack_select.gif", "a black selected");
+		}
 	}
 	
-/*	public void paint(Graphics g)
-    {
-        super.paint(g);
-        //Draws the line
-        g.drawOval(xSpot, ySpot, DIAMETER, DIAMETER);
-
-        //draws filled circle
-        g.setColor(color); 
-        g.fillOval(xSpot, ySpot, DIAMETER, DIAMETER);
-        if(king){
-        	g.drawImage(checker, xSpot, ySpot, null);
-        }
-    }*/
-	
-	public static void main(String[] args){
-		JFrame check = new JFrame();
-		
-		check.add(new Checker(0, 0, Color.BLACK));
-		check.add(new Checker(2, 2, Color.RED));
-		check.setPreferredSize(new Dimension(500, 500));
-		check.pack();
-		check.setVisible(true);
+	public String toString(){
+		return pos + " " + king + " " + color.toString();
 	}
 }
