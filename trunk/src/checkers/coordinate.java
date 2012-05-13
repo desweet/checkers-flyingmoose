@@ -6,14 +6,16 @@ package checkers;
 public class coordinate {
 	private int x;
 	private int y;
+	
 	/**
 	 * Default constructor
 	 */
-	coordinate ()
+	coordinate()
 	{
 		x = 0;
 		y = 0;
 	}
+	
 	/**
 	 * Initialization constructor
 	 * @param x the x coordinate
@@ -24,6 +26,7 @@ public class coordinate {
 		this.x = x;
 		this.y = y;
 	}
+	
 	/**
 	 * Gets the X coordinate
 	 * @return the X coordinate
@@ -32,6 +35,7 @@ public class coordinate {
 	{
 		return x;
 	}
+	
 	/**
 	 * Gets the Y coordinate
 	 * @return the Y coordinate
@@ -40,6 +44,7 @@ public class coordinate {
 	{
 		return y;
 	}
+	
 	/**
 	 * Set the value of this coordinate to a new coordinate
 	 * @param x the x value of the new coordinate
@@ -50,6 +55,7 @@ public class coordinate {
 		this.x = x;
 		this.y = y;
 	}
+	
 	/**
 	 * Set the X coordinate
 	 * @param x the value to be set
@@ -57,6 +63,7 @@ public class coordinate {
 	void setX(int x){
 		this.x = x;
 	}
+	
 	/**
 	 * Set the Y coordinate
 	 * @param y the value to be set
@@ -64,6 +71,7 @@ public class coordinate {
 	void setY(int y){
 		this.y =y;
 	}
+	
 	/**
 	 * Returns the string representing this coordinate
 	 */
@@ -71,6 +79,7 @@ public class coordinate {
 	{
 		return "(" + x + ", " + y + ")";
 	}
+	
 	/**
 	 * Determines if two coordinates are equal
 	 */

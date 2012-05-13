@@ -17,6 +17,12 @@ public class Move {
 		this.src = src;
 		this.dst = dst;
 	}
+	public Move(Move m)
+	{
+		this.src = new coordinate(m.getSrc().getX(),m.getSrc().getY());
+		this.dst = new coordinate(m.getDst().getX(),m.getDst().getY());
+		
+	}
 	/**
 	 * Gets the source coordinate
 	 * @return the source coordinate
